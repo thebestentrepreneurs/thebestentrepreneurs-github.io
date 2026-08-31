@@ -172,6 +172,10 @@ nav {
     gap: 1.2rem;
 }
 
+.contact-form .botcheck {
+    display: none;
+}
+
 .contact-form input, 
 .contact-form textarea {
     padding: 1.2rem;
@@ -210,6 +214,26 @@ nav {
 
 .submit-btn:hover {
     background: #2563EB;
+}
+
+.submit-btn:disabled {
+    cursor: wait;
+    opacity: 0.7;
+}
+
+.form-status {
+    min-height: 1.5rem;
+    color: #CBD5E1;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.form-status.success {
+    color: #86EFAC;
+}
+
+.form-status.error {
+    color: #FCA5A5;
 }
 
 footer {
