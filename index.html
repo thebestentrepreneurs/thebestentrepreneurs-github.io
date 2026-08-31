@@ -47,12 +47,54 @@
 
     <section id="contact" class="contact">
         <h2 class="section-title hidden">Ready to scale? Let's talk.</h2>
-        <form class="contact-form hidden">
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Your Email Address" required>
-            <input type="text" placeholder="Your Business Name" required>
-            <textarea placeholder="Tell us about your business goals..." rows="5" required></textarea>
+        <form
+            id="contact-form"
+            class="contact-form hidden"
+            action="https://api.web3forms.com/submit"
+            method="POST"
+        >
+            <input type="hidden" name="access_key" value="ff56b2b8-f4d9-4a0c-b9c5-f1c286a6b41d">
+            <input type="hidden" name="subject" value="New lead from TheBestEntrepreneurs.com">
+            <input type="hidden" name="from_name" value="The Best Entrepreneurs Website">
+            <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off">
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                aria-label="Your name"
+                autocomplete="name"
+                maxlength="100"
+                required
+            >
+            <input
+                type="email"
+                name="email"
+                placeholder="Your Email Address"
+                aria-label="Your email address"
+                autocomplete="email"
+                maxlength="254"
+                required
+            >
+            <input
+                type="text"
+                name="business_name"
+                placeholder="Your Business Name"
+                aria-label="Your business name"
+                autocomplete="organization"
+                maxlength="150"
+                required
+            >
+            <textarea
+                name="message"
+                placeholder="Tell us about your business goals..."
+                aria-label="Your business goals"
+                rows="5"
+                maxlength="2000"
+                required
+            ></textarea>
             <button type="submit" class="submit-btn">Send Message</button>
+            <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
         </form>
     </section>
 
