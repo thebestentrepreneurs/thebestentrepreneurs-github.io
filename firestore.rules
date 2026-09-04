@@ -1,0 +1,85 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    function hasValidProfileFields() {
+      return request.resource.data.keys().hasAll([
+          'displayName',
+          'businessName',
+          'industry',
+          'businessStage',
+          'services',
+          'primaryGoal',
+          'challenge',
+          'website',
+          'onboardingComplete',
+          'createdAt',
+          'updatedAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'displayName',
+          'businessName',
+          'industry',
+          'businessStage',
+          'services',
+          'primaryGoal',
+          'challenge',
+          'website',
+          'onboardingComplete',
+          'createdAt',
+          'updatedAt'
+        ])
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() > 0
+        && request.resource.data.displayName.size() <= 100
+        && request.resource.data.businessName is string
+        && request.resource.data.businessName.size() <= 150
+        && request.resource.data.industry is string
+        && request.resource.data.industry.size() <= 100
+        && request.resource.data.businessStage in ['', 'idea', 'launching', 'growing', 'established']
+        && request.resource.data.services is list
+        && request.resource.data.services.size() <= 3
+        && request.resource.data.services.toSet().hasOnly([
+          'web-development',
+          'brand-photography',
+          'digital-advertising'
+        ])
+        && request.resource.data.primaryGoal in ['', 'launch', 'leads', 'visibility', 'sales', 'brand']
+        && request.resource.data.challenge is string
+        && request.resource.data.challenge.size() <= 1200
+        && request.resource.data.website is string
+        && request.resource.data.website.size() <= 300
+        && request.resource.data.onboardingComplete is bool
+        && (!request.resource.data.onboardingComplete
+          || (request.resource.data.businessName.size() > 0
+            && request.resource.data.industry.size() > 0
+            && request.resource.data.businessStage != ''
+            && request.resource.data.services.size() > 0
+            && request.resource.data.primaryGoal != ''
+            && request.resource.data.challenge.size() > 0))
+        && request.resource.data.createdAt is timestamp
+        && request.resource.data.updatedAt is timestamp;
+    }
+
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow list: if false;
+
+      allow create: if isOwner(userId)
+        && hasValidProfileFields()
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+
+      allow update: if isOwner(userId)
+        && hasValidProfileFields()
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.updatedAt == request.time;
+
+      allow delete: if false;
+    }
+  }
+}

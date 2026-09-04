@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Account | The Best Entrepreneurs</title>
+    <meta name="description" content="Create or access your private client profile with The Best Entrepreneurs.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="The Best Entrepreneurs Client Center">
+    <meta property="og:description" content="Create an account, complete your business questionnaire, and manage your client profile.">
+    <meta property="og:image" content="/og.png">
+    <meta property="og:image:alt" content="The Best Entrepreneurs — Elevate Your Small Business">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Best Entrepreneurs Client Center">
+    <meta name="twitter:description" content="Create an account, complete your business questionnaire, and manage your client profile.">
+    <meta name="twitter:image" content="/og.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="account-page-body">
+    <nav>
+        <a class="logo" href="index.html" aria-label="The Best Entrepreneurs home">TheBestEntrepreneurs.com</a>
+        <ul class="nav-links">
+            <li><a href="index.html#services">Services</a></li>
+            <li><a class="nav-account-btn" href="account.html" id="account-nav-label" aria-current="page">Account</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="account" class="account-center account-page">
+            <div class="account-intro hidden">
+                <p class="eyebrow">Client center</p>
+                <h1 class="section-title">Your business, organized.</h1>
+                <p class="section-copy">Create an account, tell us where your business is headed, and keep your goals in one simple place.</p>
+            </div>
+
+            <div class="account-panel hidden">
+                <div id="firebase-setup" class="setup-notice">
+                    <strong>Account service unavailable</strong>
+                    <span>Please try again later or contact us for help.</span>
+                </div>
+
+                <div id="account-loading" class="account-loading" role="status">
+                    <span class="loading-dot" aria-hidden="true"></span>
+                    Preparing your account center...
+                </div>
+
+                <div id="auth-view" class="account-view is-hidden" aria-hidden="true">
+                    <div class="account-view-heading">
+                        <p class="account-step">Start here</p>
+                        <h2>Welcome to your client center</h2>
+                        <p>Create an account to build your business profile, or sign in to continue where you left off.</p>
+                    </div>
+
+                    <div class="auth-tabs" role="tablist" aria-label="Account access">
+                        <button class="auth-tab active" type="button" role="tab" aria-selected="true" aria-controls="signup-form" data-auth-tab="signup">Create account</button>
+                        <button class="auth-tab" type="button" role="tab" aria-selected="false" aria-controls="login-form" data-auth-tab="login">Sign in</button>
+                    </div>
+
+                    <form id="signup-form" class="account-form" autocomplete="on">
+                        <div class="field-grid two-columns">
+                            <label class="form-field">
+                                <span>Your name</span>
+                                <input id="signup-name" name="displayName" type="text" autocomplete="name" maxlength="100" placeholder="Jordan Smith" required>
+                            </label>
+                            <label class="form-field">
+                                <span>Email address</span>
+                                <input id="signup-email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@business.com" required>
+                            </label>
+                        </div>
+                        <div class="field-grid two-columns">
+                            <label class="form-field">
+                                <span>Password</span>
+                                <input id="signup-password" name="password" type="password" autocomplete="new-password" minlength="8" maxlength="128" placeholder="At least 8 characters" required>
+                            </label>
+                            <label class="form-field">
+                                <span>Confirm password</span>
+                                <input id="signup-confirm-password" name="confirmPassword" type="password" autocomplete="new-password" minlength="8" maxlength="128" placeholder="Repeat your password" required>
+                            </label>
+                        </div>
+                        <p class="form-help">We’ll send a verification link to your email after signup.</p>
+                        <button type="submit" class="account-primary-btn" data-firebase-action disabled>Create my account</button>
+                    </form>
+
+                    <form id="login-form" class="account-form is-hidden" autocomplete="on">
+                        <label class="form-field">
+                            <span>Email address</span>
+                            <input id="login-email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@business.com" required>
+                        </label>
+                        <label class="form-field">
+                            <span>Password</span>
+                            <input id="login-password" name="password" type="password" autocomplete="current-password" maxlength="128" placeholder="Your password" required>
+                        </label>
+                        <div class="form-action-row">
+                            <button id="reset-password-btn" class="text-button" type="button" data-firebase-action disabled>Forgot password?</button>
+                            <button type="submit" class="account-primary-btn" data-firebase-action disabled>Sign in</button>
+                        </div>
+                    </form>
+
+                    <p id="auth-status" class="account-status" role="status" aria-live="polite"></p>
+                </div>
+
+                <div id="onboarding-view" class="account-view is-hidden" aria-hidden="true">
+                    <div class="questionnaire-topline">
+                        <div>
+                            <p class="account-step">Business questionnaire</p>
+                            <h2 id="questionnaire-title">Tell us what you’re building</h2>
+                        </div>
+                        <span class="step-badge">About 2 minutes</span>
+                    </div>
+                    <p class="questionnaire-copy">Your answers help us understand which services and recommendations will be most useful to you.</p>
+
+                    <form id="questionnaire-form" class="account-form questionnaire-form">
+                        <div class="field-grid two-columns">
+                            <label class="form-field">
+                                <span>Your name</span>
+                                <input id="profile-name" name="displayName" type="text" autocomplete="name" maxlength="100" required>
+                            </label>
+                            <label class="form-field">
+                                <span>Business name</span>
+                                <input id="business-name" name="businessName" type="text" autocomplete="organization" maxlength="150" placeholder="Your business or working name" required>
+                            </label>
+                        </div>
+
+                        <div class="field-grid two-columns">
+                            <label class="form-field">
+                                <span>Industry</span>
+                                <input id="industry" name="industry" type="text" maxlength="100" placeholder="Retail, consulting, food..." required>
+                            </label>
+                            <label class="form-field">
+                                <span>Business stage</span>
+                                <select id="business-stage" name="businessStage" required>
+                                    <option value="">Choose a stage</option>
+                                    <option value="idea">Planning or idea stage</option>
+                                    <option value="launching">Launching now</option>
+                                    <option value="growing">Growing an active business</option>
+                                    <option value="established">Established and scaling</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <fieldset class="form-field service-choices">
+                            <legend>Which services interest you?</legend>
+                            <div class="choice-grid">
+                                <label class="choice-card">
+                                    <input type="checkbox" name="services" value="web-development">
+                                    <span><strong>Web development</strong><small>Build or improve your online presence</small></span>
+                                </label>
+                                <label class="choice-card">
+                                    <input type="checkbox" name="services" value="brand-photography">
+                                    <span><strong>Brand photography</strong><small>Create visuals that feel like your business</small></span>
+                                </label>
+                                <label class="choice-card">
+                                    <input type="checkbox" name="services" value="digital-advertising">
+                                    <span><strong>Digital advertising</strong><small>Reach more of the right customers</small></span>
+                                </label>
+                            </div>
+                        </fieldset>
+
+                        <label class="form-field">
+                            <span>Your main goal</span>
+                            <select id="primary-goal" name="primaryGoal" required>
+                                <option value="">Choose your primary goal</option>
+                                <option value="launch">Launch my business or a new offer</option>
+                                <option value="leads">Generate more qualified leads</option>
+                                <option value="visibility">Improve my online presence</option>
+                                <option value="sales">Increase sales or conversions</option>
+                                <option value="brand">Build a stronger, more consistent brand</option>
+                            </select>
+                        </label>
+
+                        <label class="form-field">
+                            <span>What’s the biggest challenge you want to solve?</span>
+                            <textarea id="business-challenge" name="challenge" rows="4" maxlength="1200" placeholder="Tell us what feels stuck or what you want to accomplish next." required></textarea>
+                        </label>
+
+                        <label class="form-field">
+                            <span>Current website <small>(optional)</small></span>
+                            <input id="website" name="website" type="url" inputmode="url" maxlength="300" placeholder="https://yourbusiness.com">
+                        </label>
+
+                        <div class="questionnaire-actions">
+                            <button id="cancel-questionnaire-btn" class="account-secondary-btn is-hidden" type="button">Cancel</button>
+                            <button type="submit" class="account-primary-btn">Save and continue</button>
+                        </div>
+                        <p id="profile-status" class="account-status" role="status" aria-live="polite"></p>
+                    </form>
+                </div>
+
+                <div id="dashboard-view" class="account-view is-hidden" aria-hidden="true">
+                    <div class="dashboard-header">
+                        <div class="profile-identity">
+                            <span id="profile-initials" class="profile-initials" aria-hidden="true">BE</span>
+                            <div>
+                                <p class="account-step">Your account</p>
+                                <h2 id="account-business-name">Your business</h2>
+                                <p id="account-email" class="account-email"></p>
+                            </div>
+                        </div>
+                        <span id="verification-badge" class="verification-badge">Email not verified</span>
+                    </div>
+
+                    <div class="profile-summary">
+                        <article>
+                            <span>Business stage</span>
+                            <strong id="summary-stage">—</strong>
+                        </article>
+                        <article>
+                            <span>Industry</span>
+                            <strong id="summary-industry">—</strong>
+                        </article>
+                        <article>
+                            <span>Primary goal</span>
+                            <strong id="summary-goal">—</strong>
+                        </article>
+                        <article>
+                            <span>Interested in</span>
+                            <strong id="summary-services">—</strong>
+                        </article>
+                    </div>
+
+                    <div class="challenge-summary">
+                        <span>Current priority</span>
+                        <p id="summary-challenge">—</p>
+                    </div>
+
+                    <div class="dashboard-actions">
+                        <button id="edit-profile-btn" class="account-primary-btn" type="button">Edit questionnaire</button>
+                        <button id="verify-email-btn" class="account-secondary-btn" type="button">Resend verification email</button>
+                        <button id="signout-btn" class="text-button" type="button">Sign out</button>
+                    </div>
+                    <p id="account-status" class="account-status" role="status" aria-live="polite"></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 The Best Entrepreneurs. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script type="module" src="account.js"></script>
+</body>
+</html>

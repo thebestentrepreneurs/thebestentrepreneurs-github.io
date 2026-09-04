@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Best Entrepreneurs | Grow Your Small Business</title>
+    <meta name="description" content="Web development, brand photography, and digital advertising for growing small businesses.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="The Best Entrepreneurs">
+    <meta property="og:description" content="Elevate your small business with creative services built to help you grow.">
+    <meta property="og:image" content="/og.png">
+    <meta property="og:image:alt" content="The Best Entrepreneurs — Elevate Your Small Business">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Best Entrepreneurs">
+    <meta name="twitter:description" content="Elevate your small business with creative services built to help you grow.">
+    <meta name="twitter:image" content="/og.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <a class="logo" href="index.html" aria-label="The Best Entrepreneurs home">TheBestEntrepreneurs.com</a>
+        <ul class="nav-links">
+            <li><a href="#services">Services</a></li>
+            <li><a class="nav-account-btn" href="account.html">Account</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="fade-in">Elevate Your Small Business</h1>
+            <p class="fade-in delay-1">Stunning Web Design. Professional Photography. Strategic Advertising.</p>
+            <a href="#contact" class="cta-btn fade-in delay-2">Start Growing Today</a>
+        </div>
+    </header>
+
+    <section id="services" class="services">
+        <h2 class="section-title hidden">How We Help You Win</h2>
+        <div class="service-cards">
+            <div class="card hidden">
+                <div class="icon">💻</div>
+                <h3>Web Development</h3>
+                <p>We build aesthetic, lightning-fast, and responsive websites engineered to convert your visitors into loyal customers.</p>
+            </div>
+            <div class="card hidden delay-1">
+                <div class="icon">📸</div>
+                <h3>Brand Photography</h3>
+                <p>High-quality product and location photography that captures your unique vibe and tells your business's story.</p>
+            </div>
+            <div class="card hidden delay-2">
+                <div class="icon">🚀</div>
+                <h3>Digital Advertising</h3>
+                <p>Targeted, data-driven ad campaigns designed to maximize ROI and put your brand in front of the right local audience.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2 class="section-title hidden">Ready to scale? Let's talk.</h2>
+        <form
+            id="contact-form"
+            class="contact-form hidden"
+            action="https://api.web3forms.com/submit"
+            method="POST"
+        >
+            <input type="hidden" name="access_key" value="ff56b2b8-f4d9-4a0c-b9c5-f1c286a6b41d">
+            <input type="hidden" name="subject" value="New lead from TheBestEntrepreneurs.com">
+            <input type="hidden" name="from_name" value="The Best Entrepreneurs Website">
+            <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off">
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                aria-label="Your name"
+                autocomplete="name"
+                maxlength="100"
+                required
+            >
+            <input
+                type="email"
+                name="email"
+                placeholder="Your Email Address"
+                aria-label="Your email address"
+                autocomplete="email"
+                maxlength="254"
+                required
+            >
+            <input
+                type="text"
+                name="business_name"
+                placeholder="Your Business Name"
+                aria-label="Your business name"
+                autocomplete="organization"
+                maxlength="150"
+                required
+            >
+            <textarea
+                name="message"
+                placeholder="Tell us about your business goals..."
+                aria-label="Your business goals"
+                rows="5"
+                maxlength="2000"
+                required
+            ></textarea>
+            <button type="submit" class="submit-btn">Send Message</button>
+            <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 The Best Entrepreneurs. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
