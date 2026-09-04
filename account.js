@@ -1,6 +1,8 @@
 import firebaseConfig from "./firebase-config.js";
 
 const FIREBASE_VERSION = "12.18.0";
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+const WEB3FORMS_ACCESS_KEY = "ff56b2b8-f4d9-4a0c-b9c5-f1c286a6b41d";
 
 const ui = {
     setupNotice: document.querySelector("#firebase-setup"),
@@ -127,6 +129,35 @@ function getInitials(name) {
         .join("");
 
     return initials || "BE";
+}
+
+async function sendProfileNotification(profile) {
+    const response = await fetch(WEB3FORMS_ENDPOINT, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        },
+        body: JSON.stringify({
+            access_key: WEB3FORMS_ACCESS_KEY,
+            subject: "New account questionnaire from TheBestEntrepreneurs.com",
+            from_name: "The Best Entrepreneurs Website",
+            name: profile.displayName,
+            email: activeUser?.email || "Not available",
+            business_name: profile.businessName || "Not provided",
+            industry: profile.industry || "Not provided",
+            business_stage: stageLabels[profile.businessStage] || "Not provided",
+            services: profile.services.map((service) => serviceLabels[service] || service).join(", "),
+            primary_goal: goalLabels[profile.primaryGoal] || "Not provided",
+            challenge: profile.challenge || "Not provided",
+            website: profile.website || "Not provided"
+        })
+    });
+
+    const result = await response.json();
+    if (!response.ok || !result.success) {
+        throw new Error("The profile notification could not be sent.");
+    }
 }
 
 function fillQuestionnaire(profile = {}) {
@@ -383,6 +414,8 @@ document.querySelector("#reset-password-btn").addEventListener("click", async ()
 ui.questionnaireForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
+    const isFirstCompletion = activeProfile?.onboardingComplete !== true;
+
     const services = Array.from(
         ui.questionnaireForm.querySelectorAll('input[name="services"]:checked'),
         (checkbox) => checkbox.value
@@ -425,6 +458,14 @@ ui.questionnaireForm.addEventListener("submit", async (event) => {
 
         if (activeUser.displayName !== profile.displayName) {
             await authApi.updateProfile(activeUser, { displayName: profile.displayName });
+        }
+
+        if (isFirstCompletion) {
+            try {
+                await sendProfileNotification(profile);
+            } catch (error) {
+                // The Firebase profile remains saved if the email service is temporarily unavailable.
+            }
         }
 
         activeProfile = { ...activeProfile, ...profile };
